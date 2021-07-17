@@ -1,21 +1,51 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {useState} from 'react';
+import { StyleSheet, Text, View } from "react-native";
+
+//components
+import Home from "./components/Home";
+
+//styled components
+import { Container } from "./styles/appStyles";
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import AppLoading from 'expo-app-loading';
+
 
 export default function App() {
+  const [ready, setReady] = useState(false);
+
+   //inital todos
+    const initialTodos = [];
+
+
+    const [todos, setTodos] = useState(initialTodos);
+
+    const LoadTodos = () => {
+      AsyncStorage.getItem("storedTodos").then(data => {
+        if (data !== null) {
+          setTodos(JSON.parse(data));
+        }
+      }).catch((error) => console.log(error));
+    };
+
+    if (!ready) {
+      return (
+        <AppLoading
+          startAsync={LoadTodos}
+          onFinish={() => setReady(true)}
+          onError={console.warn}
+        />
+      );
+    }
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Container>
+      <Home todos={todos} setTodos={setTodos}/>
+
+      <StatusBar style="light" />
+    </Container>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
