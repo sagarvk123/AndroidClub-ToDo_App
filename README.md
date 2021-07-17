@@ -1,6 +1,6 @@
 # AndroidClub-ToDo_App
 
-So this is the Basic ToDo App i have ceeated using react native expo cli. In this App 
+So this is the Basic ToDo App i have created using react native expo cli. In this App 
 you can create daily notes or your todo list. While creating the notes or todo list time and date will also be show in that. 
 Further on you can edit any of the notes or todo you want to edit. You can delete a particular note by just swiping right or you can delete
 all of the notes or todo you have wrote in the app.
